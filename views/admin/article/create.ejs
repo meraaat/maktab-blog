@@ -1,0 +1,77 @@
+<%-contentFor('body')%>
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+<div class="container">
+    <%-include('../../includes/error.ejs', {errors})%>
+    <%-include('../../includes/success.ejs', {success})%>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header" style="text-align: center;">
+                    <p class="card-title">مقاله جدید</p>
+                </div>
+                <div class="card-body">
+                    <form action="/admin/article/create" method="POST" id="form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div id="bodyEditor"></div>
+                            <input type="hidden" name="body" > 
+                            <input type="hidden" name="text" >
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>تصویر مقاله</label>
+                                    <input type="file" name="image" class="filestyle">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>عنوان مقاله</label>
+                                    <input type="text" name="title" class="form-control" placeholder="عنوان مقاله را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">ایجاد</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/bootstrap-filestyle.min.js"></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="https://unpkg.com/quill-image-compress@1.2.11/dist/quill.imageCompressor.min.js"></script>
+<script>
+    let toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'direction': 'rtl' }],
+        ['link', 'image'],
+        [{ 'color': [] }, { 'background': [] },{ 'script': 'sub'}, { 'script': 'super' }],
+        [{ 'align': [] }],
+    ]
+    Quill.register("modules/imageCompressor", imageCompressor);
+
+
+    var quill = new Quill('#bodyEditor', {
+        theme: 'snow',
+        modules: {
+            toolbar: toolbarOptions,
+            imageCompressor: {
+            quality: 0.9,
+            maxWidth: 500,
+            maxHeight: 500,
+            imageType: 'image/jpeg'
+        }
+        }
+    });
+    quill.formatText(0, quill.getLength(), 'align', 'right')
+    $(":file").filestyle({
+            text: '',
+            input: true,
+            htmlIcon: '<i class="fas fa-paperclip" style="font-size: 15pt"></i>',
+            btnClass: "btn-primary btn-fab btn-round",
+            placeholder: 'انتخاب فایل'
+    });
+    document.getElementById('form').addEventListener('submit', event => {
+        document.querySelector('[name="body"]').value = quill.root.innerHTML;
+        document.querySelector('[name="text"]').value = quill.getText(0, quill.getLength());
+    });
+</script>

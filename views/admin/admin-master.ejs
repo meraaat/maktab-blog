@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/adminMaster/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/adminMaster/assets/vendor/bootstrap/css/bootstrap-rtl.min.css">
+
+    <link href="/adminMaster/assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="/adminMaster/assets/libs/css/style.css">
+    <link rel="stylesheet" href="/adminMaster/assets/libs/css/vazir.css">
+    <link rel="stylesheet" href="/adminMaster/assets/libs/css/home.css">
+    <link rel="stylesheet" href="/adminMaster/assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <link rel="stylesheet" href="/adminMaster/assets/vendor/charts/chartist-bundle/chartist.css">
+    <link rel="stylesheet" href="/adminMaster/assets/vendor/charts/morris-bundle/morris.css">
+    <link rel="stylesheet" href="/adminMaster/assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/adminMaster/assets/vendor/charts/c3charts/c3.css">
+    <link rel="stylesheet" href="/adminMaster/assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
+    <title>پنل مدیریت وب سایت آموزشی</title>
+    <%- style %>
+</head>
+
+<body>
+    
+    <div class="dashboard-main-wrapper">
+        
+        <div class="dashboard-header">
+            <nav class="navbar navbar-expand-lg bg-white fixed-top">
+                <a class="navbar-brand" style="margin-right: 0px" href="/">
+                    <img src="/images/logo-black.png" width="50">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto navbar-right-top">
+                        <a href="/logout" class="btn btn-sm btn-danger ml-sm-4">خروج</a>
+                    </ul>
+                </div>
+
+
+            </nav>
+        </div>
+        
+        <div class="nav-left-sidebar sidebar-dark">
+            <div class="menu-list">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="d-xl-none d-lg-none" href="#">داشبورد</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav flex-column" style="padding-right: 0px">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#"><i class="fa fa-fw"></i>داشبورد</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
+                                    data-target="#submenu-8" aria-controls="submenu-8"><i
+                                        class="fa fa-fw fa-user"></i>پروفایل</a>
+                                <div id="submenu-8" class="collapse submenu">
+                                    <ul class="nav flex-column" style="padding-right: 20px">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/admin/profile/<%=auth.user.email%>">ویرایش اطلاعات</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
+                                    data-target="#submenu-4" aria-controls="submenu-4"><i
+                                        class="fas fa-fw fa-newspaper"></i>مقالات</a>
+                                <div id="submenu-4" class="collapse submenu">
+                                    <ul class="nav flex-column" style="padding-right: 20px">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/admin/article/create">ایجاد مقاله جدید</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/admin/article/list">مدیریت مقاله ها</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
+                                    data-target="#submenu-11" aria-controls="submenu-11"><i
+                                        class="fas fa-fw fa-comments"></i>دیدگاه ها</a>
+                                        
+                                <div id="submenu-11" class="collapse submenu">
+                                    <ul class="nav flex-column" style="padding-right: 20px">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/admin/comment/list">مدیریت دیدگاه ها</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            
+                            <li class="nav-item ">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
+                                    data-target="#submenu-10" aria-controls="submenu-10"><i
+                                        class="fa fa-fw fa-user-plus"></i>کاربران</a>
+                                <div id="submenu-10" class="collapse submenu">
+                                    <ul class="nav flex-column" style="padding-right: 20px">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/admin/user/create">افزودن کاربر جدید</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/admin/permission">افزودن مجوز</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/admin/role">افزودن سطح دسترسی</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/admin/user">مدیریت کاربران سایت</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
+                                    data-target="#submenu-15" aria-controls="submenu-15"><i
+                                        class="fab fa-fw fa-forumbee"></i>انجمن ها</a>
+                                <div id="submenu-15" class="collapse submenu">
+                                    <ul class="nav flex-column" style="padding-right: 20px">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/admin/froum/create">افزودن انجمن جدید</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/admin/froum">مدیریت انجمن های سایت</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <div class="dashboard-wrapper">
+            <div class="dashboard-ecommerce">
+                <div class="container-fluid dashboard-content ">
+                    <%-defineContent('body')%>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <script src="/adminMaster/assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <!-- bootstap bundle js -->
+    <script src="/adminMaster/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <!-- slimscroll js -->
+    <script src="/adminMaster/assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+    <!-- main js -->
+    <script src="/adminMaster/assets/libs/js/main-js.js"></script>
+    <!-- chart chartist js -->
+    <!-- <script src="/adminMaster/assets/vendor/charts/chartist-bundle/chartist.min.js"></script> -->
+    <!-- sparkline js -->
+    <script src="/adminMaster/assets/vendor/charts/sparkline/jquery.sparkline.js"></script>
+    <!-- morris js -->
+    <script src="/adminMaster/assets/vendor/charts/morris-bundle/raphael.min.js"></script>
+    <script src="/adminMaster/assets/vendor/charts/morris-bundle/morris.js"></script>
+    <!-- chart c3 js -->
+    <script src="/adminMaster/assets/vendor/charts/c3charts/c3.min.js"></script>
+    <script src="/adminMaster/assets/vendor/charts/c3charts/d3-5.4.0.min.js"></script>
+    <script src="/adminMaster/assets/vendor/charts/c3charts/C3chartjs.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- <script src="/adminMaster/assets/libs/js/dashboard-ecommerce.js"></script> -->
+    <%- script %>
+</body>
+
+</html>

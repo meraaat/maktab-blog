@@ -1,0 +1,63 @@
+<%-contentFor('body')%>
+
+<div class="container">
+    <%-include('../includes/error.ejs', {errors})%>
+    <%-include('../includes/success.ejs', {success})%>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header" style="text-align: center;">
+                    <p class="card-title">صفحه ورود</p>
+                </div>
+                <div class="card-body" style="text-align: right; direction: rtl;">
+                    <form action="/auth/login" method="POST">
+                        <div class="form-group">
+                            <div class="row  d-flex justify-content-center">
+                                <div class="col-6">
+                                    <label>ایمیل</label>
+                                    <input type="text" class="form-control"  name="email" placeholder="ایمیل خود را وارد کنید">
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-6">
+                                    <label>رمز عبور</label>
+                                    <input type="password"  class="form-control" name="password" placeholder="رمز عبور خود را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-center">
+
+                                    <%-recaptcha%>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            
+                            <div class="row">
+                                
+                                <div class="col-12 d-flex justify-content-center">
+                                    <a href="/auth/google" class="btn btn-danger">ورود با اکانت گوگل</a>
+                                    <button type="submit" class="btn btn-success mr-2">ورود</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row  d-flex justify-content-center">
+                                <div class="col-6 d-flex justify-content-center">
+                                    <span class="ml-2">حساب کاربری ندارید؟</span>
+                                    <a href="/auth/register">ثبت نام کنید</a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

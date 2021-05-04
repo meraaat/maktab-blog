@@ -1,0 +1,108 @@
+<%-contentFor('body')%>
+<%
+    let searchRegex;
+    if(search){
+        search = convert.enDigitsToFa(search);
+        searchRegex = new RegExp(`${search}`, 'g');
+    }else{
+        searchRegex = new RegExp(``, 'g');
+    }
+%>
+<%
+    function generateTitle(title){
+        if(search){
+            return title.replace(searchRegex, `<i style="background-color: yellow">${search}</i>`);
+        }else{
+            return title
+        }
+    }
+%>
+<%
+    function generateNumberColorful(data){
+        if(search){
+            let newDate = convert.enDigitsToFa(data);
+            return newDate.replace(searchRegex, `<i style="background-color: yellow">${search}</i>`);
+        }else{
+            let newData = convert.enDigitsToFa(data);
+            return newData;
+        }
+    }
+%>
+<div class="container">
+    <%-include('../../includes/error.ejs', {errors})%>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header" style="text-align: center;">
+                    <div class="row">
+                        <div class="col-md-8"></div>
+                        <div class="col-md-4">
+                            <form action="/admin/article/search" method="POST" style="display: flex;" id="searchForm">
+                                <input type="text" name="search" placeholder="چیزی برای جست و جو بنویس" class="form-control">
+                                <button type="submit" class="btn btn-info">
+                                    جست و جو
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </form>
+                        </div>
+                        
+                    </div>
+                    <p class="card-title">لیست مقاله ها</p>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>عنوان مقاله</th>
+                                <th>نویسنده</th>
+                                <th>تصویر</th>
+                                <th>تنظیمات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%articles.docs.forEach(article => {%>
+                                <tr>
+                                    <td><%-generateTitle(article.title)%></td>
+                                    <td><%=`${article.writer.firstName} ${article.writer.lastName}`%></td>
+                                    <td>
+                                        <img src="<%=article.image%>" width="100">
+                                    </td>
+                                    <td style="display: flex;">
+                                        <a href="/admin/article/delete/<%=article._id%>" class="btn btn-danger">حذف</a>
+                                        <a href="/admin/article/edit/<%=article._id%>" class="btn btn-primary">ویرایش</a>
+                                    </td>
+                                </tr>
+                            <%})%>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <%-include('../../includes/pagination.ejs', {pagination: articles})%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let successMessage = '<%=success%>';
+    if(successMessage && successMessage != ''){
+        swal({
+            icon: 'success',
+            title: successMessage,
+            buttons: false,
+            timer: 3500
+        });
+    }
+    let searchForm = document.getElementById('searchForm');
+    let input = searchForm.querySelector('input');
+    searchForm.addEventListener('submit', event => {
+        if(!input.value || input.value == ''){
+            event.preventDefault();
+            window.location.href = '/admin/article/list';
+        }
+        let prevAction = searchForm.action;
+        let newAction = `${prevAction}${!prevAction.endsWith('/') ? '/' : ''}${input.value.split('/').join('_').toString()}`;
+        searchForm.action = newAction;
+    });
+</script>

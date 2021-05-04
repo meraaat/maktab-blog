@@ -1,0 +1,53 @@
+<%-contentFor('body')%>
+<div class=""style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body" id="messageBody"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container" >
+        
+        <div class="row">
+            <div class="col-6">
+                <input type="text" id="messageBox" class="form-control" placeholder="پیامی بنویسید...">
+            </div>
+            <div class="col-6">
+                <button type="button" id="sendMessage" class="btn btn-success">ارسال پیام</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/socket.io/socket.io.min.js"></script>
+
+<script>
+    let socket = io('http://localhost:3000');
+    socket.on('hello', function(data) {
+        console.log('hello event emitted');
+        console.log(data);
+    });
+    //
+    socket.on('message', data => {
+        console.log(data);
+        let p = document.createElement('p');
+        p.classList = 'bg-success text-light p-3';
+        p.textContent = data;
+        document.getElementById('messageBody').appendChild(p);
+    })
+    document.getElementById('sendMessage').addEventListener('click', event => {
+        let message = document.getElementById('messageBox').value;
+        if(!message){
+            message = '';
+        }
+        socket.emit('message', message);
+        document.getElementById('messageBox').value = '';
+        let p = document.createElement('p');
+        p.classList = 'bg-secondary text-light p-3';
+        p.textContent = message;
+        document.getElementById('messageBody').appendChild(p);
+    });
+</script>

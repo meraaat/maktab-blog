@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header" style="text-align: center;">
+                    <p class="card-title">لیست کامنت ها</p>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>متن کامنت</th>
+                                <th>کاربر</th>
+                                <th>تاریخ</th>
+                                <th>تنظیمات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%comments.docs.forEach(comment => {%>
+                                <tr>
+                                    <td><%=comment.body.substring(0, 50)%></td>
+                                    <td><%=`${comment?.user?.firstName} ${comment?.user?.lastName}`%></td>
+                                    <td><%=moment(comment.createdAt).format('jDD/jMM/jYYYY')%></td>
+                                    <td>
+                                        <%if(!comment.accept){%>
+                                            <a href="/admin/comment/verify/<%=comment._id%>" class="btn btn-success">تایید</a>    
+                                        <%}else{%>
+                                            <a href="/admin/comment/cancel/<%=comment._id%>" class="btn btn-danger">عدم تایید</a>
+                                        <%}%>
+                                        <a href="/admin/comment/delete/<%=comment._id%>" class="btn btn-danger">حذف</a>
+                                    </td>
+                                </tr>
+                            <%})%>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer d-flex justify-content-center">
+                    <%-include('../../includes/pagination.ejs', {pagination: comments})%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

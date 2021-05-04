@@ -1,0 +1,88 @@
+<%-contentFor('body')%>
+
+<div class="container">
+    <%-include('../../includes/error.ejs', {errors})%>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header" style="text-align: center;">
+                    <div class="row">
+                        <div class="col-md-8"></div>
+                        <div class="col-md-4">
+                            <form action="/admin/article/search" method="POST" style="display: flex;" id="searchForm">
+                                <input type="text" name="search" placeholder="چیزی برای جست و جو بنویس" class="form-control">
+                                <button type="submit" class="btn btn-info">
+                                    جست و جو
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </form>
+                        </div>
+                        
+                    </div>
+                    <p class="card-title">لیست مقاله ها</p>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>عنوان مقاله</th>
+                                <th>نویسنده</th>
+                                <th>تصویر</th>
+                                <th>تنظیمات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%articles.docs.forEach(article => {%>
+                                <tr>
+                                    <td><%=article.title%></td>
+                                    <td><%=`${article.writer.firstName} ${article.writer.lastName}`%></td>
+                                    <td>
+                                        <img src="<%=article.image%>" width="100">
+                                    </td>
+                                    <td style="display: flex;">
+                                        <a href="/admin/article/delete/<%=article._id%>" class="btn btn-danger">حذف</a>
+                                        <a href="/admin/article/edit/<%=article._id%>" class="btn btn-primary">ویرایش</a>
+                                    </td>
+                                </tr>
+                            <%})%>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <%-include('../../includes/pagination.ejs', {pagination: articles})%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let successMessage = '<%=success%>';
+    if(successMessage && successMessage != ''){
+        swal({
+            icon: 'success',
+            title: successMessage,
+            buttons: false,
+            timer: 3500
+        });
+    }
+    let searchForm = document.getElementById('searchForm');
+    let input = searchForm.querySelector('input');
+    searchForm.addEventListener('submit', event => {
+        console.log(typeof input.value);
+        if(!input.value || input.value == ''){
+            event.preventDefault();
+            swal({
+                icon: 'error',
+                title: 'اخطار',
+                text: 'چیزی برای جست و جو بنویسید',
+                buttons: false
+            });
+            
+            input.value = null;
+        }
+        let prevAction = searchForm.action;
+        let newAction = `${prevAction}${!prevAction.endsWith('/') ? '/' : ''}${input.value.split('/').join('_').toString()}`;
+        searchForm.action = newAction;
+    });
+</script>

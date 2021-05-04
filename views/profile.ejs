@@ -1,0 +1,92 @@
+<%-contentFor('body')%>
+
+<div class="container">
+    <%-include('./includes/error.ejs', {errors})%>
+    <%-include('./includes/success.ejs', {success})%>
+    <div class="row d-flex justify-content-center">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <p class="card-title">پروفایل کاربری</p>
+                </div>
+                <div class="card-body">
+                    <form action="/profile/<%=user.email%>" method="POST" id="form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-center">
+                                    <img src="<%-user.profile && user.profile != '' ? user.profile : '/images/image.png'%>" width="200" id="placeholder">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>نام</label>
+                                    <input type="text" class="form-control" name="firstName" placeholder="نام خود را وارد کنید" value="<%=user.firstName%>">
+                                </div>
+                                <div class="col-6">
+                                    <label>نام خانوادگی</label>
+                                    <input type="text" class="form-control"  name="lastName" placeholder="نام خانوادگی خود را وارد کنید" value="<%=user.lastName%>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>ایمیل</label>
+                                    <input type="text" class="form-control"  name="email" placeholder="ایمیل خود را وارد کنید" value="<%=user.email%>">
+                                </div>
+                                <div class="col-6">
+                                    <label>شماره تلفن</label>
+                                    <input type="text"  class="form-control" name="phoneNumber" placeholder="شماره تلفن خود را وارد کنید" value="<%=user.phoneNumber%>"> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>رمز عبور جدید</label>
+                                    <input type="password" name="password" class="form-control" placeholder="رمز عبور جدید را وارد کنید">
+                                </div>
+                                <div class="col-6">
+                                    <label>رمر عبور قبلی</label>
+                                    <input type="password" name="oldPassword" class="form-control" placeholder="رمز عبور قبلی را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-6" style="display: flex; flex-direction: column; justify-content: flex-end;">
+                                    <label>عکس پروفایل</label>
+                                    <input type="file" class="form-control" class="filestyle" name="profile" id="profile">
+                                </div>
+                                <div class="col-6 d-flex justify-content-center">
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <button type="submit" class="btn btn-success">ویرایش</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/bootstrap-filestyle.min.js"></script>
+<script>
+    document.querySelector('#profile').addEventListener('change', event => {
+        let url = URL.createObjectURL(event.target.files[0]);
+        reader.readAsDataURL()
+        document.querySelector('#placeholder').src = url;
+    });
+    $(":file").filestyle({
+        text: '',
+        input: true,
+        htmlIcon: '<i class="fas fa-paperclip" style="font-size: 15pt"></i>',
+        btnClass: "btn-primary btn-fab btn-round",
+        placeholder: 'انتخاب فایل'
+    });
+</script>
